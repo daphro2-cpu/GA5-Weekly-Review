@@ -1,145 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GA5 Weekly Practice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GA5 Weekly Practice</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      background: linear-gradient(to bottom, #a9d8f3 0%, #dff3ff 55%, #eefaff 100%);
+      text-align: center;
+      min-height: 100vh;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: "Century Gothic", Arial, sans-serif;
-  background: linear-gradient(#a8d8f0, #dff3ff);
-  text-align: center;
-}
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 50px;
+    }
 
-/* TITLE */
-h1 {
-  font-size: 3em;
-  color: white;
-  margin: 30px 0 10px;
-  text-shadow: 3px 3px rgba(0,0,0,0.2);
-  font-weight: bold;
-}
+    h1 {
+      margin: 10px 0 24px;
+      font-size: 3.2rem;
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+      letter-spacing: 1px;
+    }
 
-/* GRID */
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 20px;
-}
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
 
-/* CARD */
-.card {
-  border-radius: 20px;
-  padding: 20px;
-  color: #333;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-  position: relative;
-  border: 5px solid white;
-  transition: 0.2s;
-}
+    .card {
+      border-radius: 26px;
+      border: 6px solid #ffffff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.14);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.card:hover {
-  transform: translateY(-5px);
-}
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
+    }
 
-/* ICON */
-.icon {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
+    .card-top {
+      padding: 18px 16px 14px;
+    }
 
-/* TEXT */
-.card h2 {
-  margin: 5px 0;
-  font-size: 1.4em;
-  font-weight: bold;
-}
+    .card-bottom {
+      padding: 18px 16px 22px;
+      background: rgba(255, 255, 255, 0.32);
+    }
 
-.card p {
-  font-size: 0.95em;
-}
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 6px;
+    }
 
-/* BUTTON */
-.btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 18px;
-  background: #4CAF50;
-  color: white;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
+    .week-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2f2f2f;
+      margin: 6px 0 8px;
+    }
 
-/* COLORS (MATCH IMAGE STYLE) */
-.green { background: #d9f2d9; }
-.yellow { background: #ffeaa7; }
-.blue { background: #cfe8ff; }
-.orange { background: #ffd3a6; }
-.purple { background: #e4d4ff; }
+    .subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #3a3a3a;
+      line-height: 1.35;
+      min-height: 44px;
+      margin-bottom: 16px;
+    }
 
-/* NEW BADGE */
-.new {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: red;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: bold;
-}
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 16px;
+      box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.15);
+      transition: transform 0.15s ease;
+    }
 
-</style>
+    .btn:hover {
+      transform: scale(1.04);
+    }
+
+    .new {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff3a22;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    }
+
+    .green {
+      background: linear-gradient(to bottom, #9fe061 0%, #dff2cb 100%);
+    }
+
+    .yellow {
+      background: linear-gradient(to bottom, #ffd343 0%, #ffef9d 100%);
+    }
+
+    .blue {
+      background: linear-gradient(to bottom, #58b8ff 0%, #cdeaff 100%);
+    }
+
+    .orange {
+      background: linear-gradient(to bottom, #ffad42 0%, #ffd99f 100%);
+    }
+
+    .purple {
+      background: linear-gradient(to bottom, #b985ff 0%, #e8d6ff 100%);
+    }
+
+    .teal {
+      background: linear-gradient(to bottom, #4fd6c8 0%, #c9f5ef 100%);
+    }
+
+    .pink {
+      background: linear-gradient(to bottom, #ff8ec2 0%, #ffd6e8 100%);
+    }
+
+    .lime {
+      background: linear-gradient(to bottom, #b8e84f 0%, #e8f9be 100%);
+    }
+
+    .sky {
+      background: linear-gradient(to bottom, #6fd8ff 0%, #daf5ff 100%);
+    }
+
+    .gold {
+      background: linear-gradient(to bottom, #ffbf3f 0%, #ffe5a9 100%);
+    }
+
+    .green .btn { background: linear-gradient(to bottom, #43b536 0%, #2b9820 100%); }
+    .yellow .btn { background: linear-gradient(to bottom, #ffb300 0%, #f08d00 100%); }
+    .blue .btn { background: linear-gradient(to bottom, #2f89ff 0%, #1667d9 100%); }
+    .orange .btn { background: linear-gradient(to bottom, #ff8f1f 0%, #e66d00 100%); }
+    .purple .btn { background: linear-gradient(to bottom, #8f63ff 0%, #7044e8 100%); }
+    .teal .btn { background: linear-gradient(to bottom, #18b6a5 0%, #069382 100%); }
+    .pink .btn { background: linear-gradient(to bottom, #ff5da7 0%, #e73e8c 100%); }
+    .lime .btn { background: linear-gradient(to bottom, #7dbd22 0%, #5f9810 100%); }
+    .sky .btn { background: linear-gradient(to bottom, #2da8e8 0%, #0f87c7 100%); }
+    .gold .btn { background: linear-gradient(to bottom, #f5a400 0%, #d98b00 100%); }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+      }
+
+      .week-title {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page-wrap">
+    <h1>🌟 GA5 Weekly Practice</h1>
 
-<h1>🌟 GA5 Weekly Practice</h1>
+    <div class="container">
 
-<div class="container">
+      <div class="card green">
+        <div class="new">NEW</div>
+        <div class="card-top">
+          <div class="icon">🎯</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 1</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
 
-  <!-- 🔥 ADD NEW WEEKS HERE 🔥 -->
+      <div class="card yellow">
+        <div class="card-top">
+          <div class="icon">📘</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 2</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
 
-  <!-- WEEK TEMPLATE -->
-  <div class="card green">
-    <div class="new">NEW</div>
-    <div class="icon">🎯</div>
-    <h2>Week 4</h2>
-    <p>Weekly Review Practice</p>
-    <a class="btn" href="PASTE-YOUR-LINK" target="_blank">Start</a>
+      <div class="card blue">
+        <div class="card-top">
+          <div class="icon">📝</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 3</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-top">
+          <div class="icon">🎮</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 4</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-top">
+          <div class="icon">📚</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 5</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-top">
+          <div class="icon">✏️</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 6</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card pink">
+        <div class="card-top">
+          <div class="icon">🧠</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 7</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card lime">
+        <div class="card-top">
+          <div class="icon">🔍</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 8</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card sky">
+        <div class="card-top">
+          <div class="icon">⭐</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 9</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-top">
+          <div class="icon">🚀</div>
+        </div>
+        <div class="card-bottom">
+          <div class="week-title">Week 10</div>
+          <div class="subtitle">Weekly Review Practice</div>
+          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <!-- OLD WEEKS -->
-
-  <div class="card yellow">
-    <div class="icon">📘</div>
-    <h2>Week 3</h2>
-    <p>Weekly Review Practice</p>
-    <a class="btn" href="LINK" target="_blank">Start</a>
-  </div>
-
-  <div class="card blue">
-    <div class="icon">📝</div>
-    <h2>Week 2</h2>
-    <p>Weekly Review Practice</p>
-    <a class="btn" href="LINK" target="_blank">Start</a>
-  </div>
-
-  <div class="card orange">
-    <div class="icon">🎮</div>
-    <h2>Week 1</h2>
-    <p>Weekly Review Practice</p>
-    <a class="btn" href="LINK" target="_blank">Start</a>
-  </div>
-
-</div>
-
 </body>
 </html>
