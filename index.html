@@ -106,6 +106,7 @@
       padding: 8px 14px;
       border-radius: 999px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+      z-index: 3;
     }
 
     .green {
@@ -159,6 +160,35 @@
     .sky .btn { background: linear-gradient(to bottom, #2da8e8 0%, #0f87c7 100%); }
     .gold .btn { background: linear-gradient(to bottom, #f5a400 0%, #d98b00 100%); }
 
+    .coming-soon {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.62);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      z-index: 2;
+    }
+
+    .coming-text {
+      background: #ff3a22;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 14px 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transform: rotate(-8deg);
+      letter-spacing: 0.5px;
+    }
+
+    .disabled-btn {
+      background: linear-gradient(to bottom, #9b9b9b 0%, #7d7d7d 100%) !important;
+      pointer-events: none;
+      box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.08);
+    }
+
     @media (max-width: 900px) {
       .container {
         grid-template-columns: repeat(2, 1fr);
@@ -187,7 +217,6 @@
     <div class="container">
 
       <div class="card green">
-        <div class="new">NEW</div>
         <div class="card-top">
           <div class="icon">🎯</div>
         </div>
@@ -287,13 +316,16 @@
       </div>
 
       <div class="card gold">
+        <div class="coming-soon">
+          <div class="coming-text">COMING SOON</div>
+        </div>
         <div class="card-top">
           <div class="icon">🚀</div>
         </div>
         <div class="card-bottom">
           <div class="week-title">Week 10</div>
           <div class="subtitle">Weekly Review Practice</div>
-          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+          <a class="btn disabled-btn" href="javascript:void(0)">Not Available</a>
         </div>
       </div>
 
@@ -320,28 +352,35 @@
       </div>
 
       <div class="card blue">
+        <div class="coming-soon">
+          <div class="coming-text">COMING SOON</div>
+        </div>
         <div class="card-top">
           <div class="icon">📝</div>
         </div>
         <div class="card-bottom">
           <div class="week-title">Week 13</div>
           <div class="subtitle">Weekly Review Practice</div>
-          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+          <a class="btn disabled-btn" href="javascript:void(0)">Not Available</a>
         </div>
       </div>
 
       <div class="card orange">
+        <div class="coming-soon">
+          <div class="coming-text">COMING SOON</div>
+        </div>
         <div class="card-top">
           <div class="icon">🎮</div>
         </div>
         <div class="card-bottom">
           <div class="week-title">Week 14</div>
           <div class="subtitle">Weekly Review Practice</div>
-          <a class="btn" href="YOUR-LINK-HERE" target="_blank">Start</a>
+          <a class="btn disabled-btn" href="javascript:void(0)">Not Available</a>
         </div>
       </div>
 
       <div class="card purple">
+        <div class="new">NEW</div>
         <div class="card-top">
           <div class="icon">📚</div>
         </div>
