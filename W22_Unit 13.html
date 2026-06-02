@@ -11,8 +11,8 @@
 </head>
 <body>
 <div class="wrap"><div class="topbar"><div class="brand"><div class="logo"><img src="logo.png" alt="GA Logo" onerror="this.style.display='none'; this.parentElement.textContent='📰';"></div><div class="titleblock"><h1>Unit 13 – Week 18: Online Practice</h1><div class="sub">Listening Vocabulary + Words in Context + Cloze + Grammar</div></div></div><div class="stats"><div class="pill">Progress: <strong id="progress">1/26</strong></div><div class="pill">Score: <strong id="score">0</strong></div><div class="pill">Mode: <strong id="mode">Main</strong></div></div></div>
-<div class="grid"><div class="card"><div class="cardHeader"><div class="kicker"><div class="sectionLabel" id="sectionLabel">Part: Listening Vocabulary</div><div class="qMeta" id="qMeta">Question 1 of 26</div></div><div class="hintBox"><strong>How to play:</strong><ul><li><strong>Listening Vocabulary:</strong> click the speaker, listen to the definition, then choose the correct word.</li><li><strong>Words in Context:</strong> choose the word that matches the clue.</li><li><strong>Cloze:</strong> choose the best word to complete the sentence.</li><li><strong>Grammar:</strong> choose the correct modal phrase.</li><li>Wrong answers will come back at the end for review.</li></ul></div></div><div class="qText"><div class="prompt" id="promptLine">Listening Vocabulary</div><div class="main" id="questionText"></div></div><div class="speakArea"><button class="speakBtn" id="speakBtn">🔊 Listen</button></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><div class="controls"><div class="leftControls"><button class="btn" id="restartBtn">Restart</button><button class="btn" id="hintBtn">Hint</button></div><button class="btn primary" id="nextBtn" disabled>Next</button></div></div>
-<div class="card"><div class="side"><h3>Unit 13 <span class="tag">Mass Media</span></h3><div class="small">Complete all activities:<br><br>• Listening Vocabulary<br>• Words in Context<br>• Cloze Practice<br>• Grammar Practice<br>• Word Study<br>• Writing Study<br><br>Wrong answers will return at the end for review.</div><div class="divider"></div><div class="small"><strong>Reading Skill:</strong><br>Main Idea & Supporting Details<br><br><strong>Listening Skill:</strong><br>Gist & Details<br><br><strong>Grammar:</strong><br>must / mustn’t / have to / don’t have to</div></div></div></div></div>
+<div class="grid"><div class="card"><div class="cardHeader"><div class="kicker"><div class="sectionLabel" id="sectionLabel">Part: Listening Vocabulary</div><div class="qMeta" id="qMeta">Question 1 of 26</div></div><div class="hintBox"><strong>How to play:</strong><ul><li><strong>Listening Vocabulary:</strong> click the speaker, listen to the definition, then choose the correct word.</li><li><strong>Words in Context:</strong> choose the word that matches the clue.</li><li><strong>Cloze:</strong> choose the best word to complete the sentence.</li><li><strong>Grammar:</strong> choose the correct modal phrase.</li><li>If you choose the wrong answer, try again and then move on.</li></ul></div></div><div class="qText"><div class="prompt" id="promptLine">Listening Vocabulary</div><div class="main" id="questionText"></div></div><div class="speakArea"><button class="speakBtn" id="speakBtn">🔊 Listen</button></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><div class="controls"><div class="leftControls"><button class="btn" id="restartBtn">Restart</button><button class="btn" id="hintBtn">Hint</button></div><button class="btn primary" id="nextBtn" disabled>Next</button></div></div>
+<div class="card"><div class="side"><h3>Unit 13 <span class="tag">Mass Media</span></h3><div class="small">Complete all activities:<br><br>• Listening Vocabulary<br>• Words in Context<br>• Cloze Practice<br>• Grammar Practice<br>• Word Study<br>• Writing Study<br><br>If you choose the wrong answer, try again and then move on.</div><div class="divider"></div><div class="small"><strong>Reading Skill:</strong><br>Main Idea & Supporting Details<br><br><strong>Listening Skill:</strong><br>Gist & Details<br><br><strong>Grammar:</strong><br>must / mustn’t / have to / don’t have to</div></div></div></div></div>
 <script>
 const questions=[
 {section:'Listening Vocabulary',prompt:'Listen to the definition and choose the correct word.',speech:'All the ways information is shared with many people, such as television, radio, newspapers, and the Internet.',text:'Choose the word that matches the definition.',options:['mass media','magazine','publisher','blog'],answer:0,hint:'It means many forms of communication.'},
@@ -42,12 +42,51 @@ const questions=[
 {section:'Word Study',prompt:'Choose the word with a silent k.',speech:'Choose the word with a silent k.',text:'Which word has a silent k?',options:['knowledge','keyboard','kind','keep'],answer:0,hint:'In kn words, the k is silent.'},
 {section:'Writing Study',prompt:'Choose the pronoun that matches the noun.',speech:'Choose the pronoun that matches the noun.',text:'Early humans made a discovery. ______ told their friends.',options:['They','It','He','She'],answer:0,hint:'Humans means more than one person.'}
 ];
-let index=0,score=0,allowNext=false,inReview=false,reviewPos=0,wrongIndexes=[];
+let index=0,score=0,allowNext=false;
 const progressEl=document.getElementById('progress'),scoreEl=document.getElementById('score'),modeEl=document.getElementById('mode'),sectionLabelEl=document.getElementById('sectionLabel'),qMetaEl=document.getElementById('qMeta'),promptLineEl=document.getElementById('promptLine'),questionTextEl=document.getElementById('questionText'),optionsEl=document.getElementById('options'),feedbackEl=document.getElementById('feedback'),nextBtn=document.getElementById('nextBtn'),restartBtn=document.getElementById('restartBtn'),hintBtn=document.getElementById('hintBtn'),speakBtn=document.getElementById('speakBtn');
-function currentQuestion(){return inReview?questions[wrongIndexes[reviewPos]]:questions[index]}function setStats(){progressEl.textContent=`${inReview?reviewPos+1:index+1}/${inReview?wrongIndexes.length:questions.length}`;scoreEl.textContent=score;modeEl.textContent=inReview?'Review':'Main'}let speechVoices=[];function loadVoices(){speechVoices=window.speechSynthesis?window.speechSynthesis.getVoices():[]}loadVoices();if(window.speechSynthesis&&'onvoiceschanged'in window.speechSynthesis){window.speechSynthesis.onvoiceschanged=loadVoices}function pickAmericanVoice(){if(!speechVoices||!speechVoices.length)return null;return speechVoices.find(v=>/Google US English/i.test(v.name))||speechVoices.find(v=>/Microsoft Aria/i.test(v.name))||speechVoices.find(v=>/Jenny/i.test(v.name)&&/en-US/i.test(v.lang))||speechVoices.find(v=>/Guy/i.test(v.name)&&/en-US/i.test(v.lang))||speechVoices.find(v=>/Samantha/i.test(v.name))||speechVoices.find(v=>/^en-US$/i.test(v.lang))||speechVoices.find(v=>/English \(United States\)/i.test(v.name))||null}function formatForSpeech(txt){return txt}function speakText(txt){if(!window.speechSynthesis)return;loadVoices();window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(formatForSpeech(txt));const voice=pickAmericanVoice();if(voice)u.voice=voice;u.lang=(voice&&voice.lang)?voice.lang:'en-US';u.rate=.82;u.pitch=1.0;u.volume=1;window.speechSynthesis.speak(u)}
-function render(){const q=currentQuestion();sectionLabelEl.textContent=`Part: ${q.section}`;qMetaEl.textContent=inReview?`Review ${reviewPos+1} of ${wrongIndexes.length}`:`Question ${index+1} of ${questions.length}`;promptLineEl.textContent=q.section.toUpperCase();questionTextEl.innerHTML=`<div class="prompt">${q.prompt}</div><div class="main">${q.text}</div>`;optionsEl.innerHTML='';q.options.forEach((opt,i)=>{const b=document.createElement('button');b.className='optBtn';b.textContent=opt;b.onclick=()=>choose(i);optionsEl.appendChild(b)});feedbackEl.className='feedback';feedbackEl.textContent='';allowNext=false;nextBtn.disabled=true;speakBtn.onclick=()=>speakText(q.speech);setStats()}
-function choose(i){const q=currentQuestion();[...optionsEl.children].forEach(b=>b.disabled=true);if(i===q.answer){if(!inReview)score+=1;feedbackEl.className='feedback good';feedbackEl.textContent='Correct. Good work.';allowNext=true;nextBtn.disabled=false;setStats()}else{feedbackEl.className='feedback bad';feedbackEl.textContent=`Not quite. Hint: ${q.hint}`;if(!inReview&&!wrongIndexes.includes(index))wrongIndexes.push(index);const correctButton=[...optionsEl.children][q.answer];correctButton.style.borderColor='rgba(69,240,141,.85)';correctButton.style.background='rgba(69,240,141,.13)'}}
-function next(){if(!allowNext)return;if(!inReview){index+=1;if(index<questions.length){render();return}if(wrongIndexes.length){inReview=true;reviewPos=0;render();return}finish()}else{reviewPos+=1;if(reviewPos<wrongIndexes.length){render();return}finish()}}
-function finish(){sectionLabelEl.textContent='Finished';qMetaEl.textContent='All done';promptLineEl.textContent='SUMMARY';const missed=[...new Set(wrongIndexes.map(i=>questions[i].options[questions[i].answer]))];questionTextEl.innerHTML=`<div class="main">You finished Unit 13.<br><br><strong>Your score:</strong> ${score} / ${questions.length}.${missed.length?`<br><br><strong>Review these answers:</strong><br>${missed.join(', ')}`:`<br><br><strong>Excellent work.</strong>`}</div>`;optionsEl.innerHTML='';feedbackEl.textContent='';nextBtn.disabled=true;speakBtn.onclick=null}
-function restart(){index=0;score=0;allowNext=false;inReview=false;reviewPos=0;wrongIndexes=[];render()}nextBtn.addEventListener('click',next);restartBtn.addEventListener('click',restart);hintBtn.addEventListener('click',()=>{const q=currentQuestion();feedbackEl.className='feedback warn';feedbackEl.textContent=`Hint: ${q.hint}`});render();
+function currentQuestion(){return questions[index]}function setStats(){progressEl.textContent=`${index+1}/${questions.length}`;scoreEl.textContent=score;modeEl.textContent='Main'}/${inReview?wrongIndexes.length:questions.length}`;scoreEl.textContent=score;modeEl.textContent='Main'}let speechVoices=[];function loadVoices(){speechVoices=window.speechSynthesis?window.speechSynthesis.getVoices():[]}loadVoices();if(window.speechSynthesis&&'onvoiceschanged'in window.speechSynthesis){window.speechSynthesis.onvoiceschanged=loadVoices}function pickAmericanVoice(){if(!speechVoices||!speechVoices.length)return null;return speechVoices.find(v=>/Google US English/i.test(v.name))||speechVoices.find(v=>/Microsoft Aria/i.test(v.name))||speechVoices.find(v=>/Jenny/i.test(v.name)&&/en-US/i.test(v.lang))||speechVoices.find(v=>/Guy/i.test(v.name)&&/en-US/i.test(v.lang))||speechVoices.find(v=>/Samantha/i.test(v.name))||speechVoices.find(v=>/^en-US$/i.test(v.lang))||speechVoices.find(v=>/English \(United States\)/i.test(v.name))||null}function formatForSpeech(txt){return txt}function speakText(txt){if(!window.speechSynthesis)return;loadVoices();window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(formatForSpeech(txt));const voice=pickAmericanVoice();if(voice)u.voice=voice;u.lang=(voice&&voice.lang)?voice.lang:'en-US';u.rate=.82;u.pitch=1.0;u.volume=1;window.speechSynthesis.speak(u)}
+function render(){const q=currentQuestion();sectionLabelEl.textContent=`Part: ${q.section}`;qMetaEl.textContent=`Question ${index+1} of ${questions.length}`;promptLineEl.textContent=q.section.toUpperCase();questionTextEl.innerHTML=`<div class="prompt">${q.prompt}</div><div class="main">${q.text}</div>`;optionsEl.innerHTML='';q.options.forEach((opt,i)=>{const b=document.createElement('button');b.className='optBtn';b.textContent=opt;b.onclick=()=>choose(i);optionsEl.appendChild(b)});feedbackEl.className='feedback';feedbackEl.textContent='';allowNext=false;nextBtn.disabled=true;speakBtn.onclick=()=>speakText(q.speech);setStats()}
+function choose(i){
+  const q=currentQuestion();
+  const buttons=[...optionsEl.children];
+
+  if(i===q.answer){
+    buttons.forEach(b=>b.disabled=true);
+    score+=1;
+    feedbackEl.className='feedback good';
+    feedbackEl.textContent='Correct. Good work.';
+    allowNext=true;
+    nextBtn.disabled=false;
+    buttons[i].style.borderColor='rgba(69,240,141,.85)';
+    buttons[i].style.background='rgba(69,240,141,.13)';
+    setStats();
+  }else{
+    feedbackEl.className='feedback bad';
+    feedbackEl.textContent=`Try again. Hint: ${q.hint}`;
+    buttons[i].disabled=true;
+    buttons[i].style.opacity='0.42';
+    buttons[i].style.borderColor='rgba(255,107,107,.65)';
+    buttons[i].style.background='rgba(255,107,107,.10)';
+  }
+}
+function next(){
+  if(!allowNext)return;
+  index+=1;
+  if(index<questions.length){
+    render();
+    return;
+  }
+  finish();
+}
+function finish(){
+  sectionLabelEl.textContent='Finished';
+  qMetaEl.textContent='All done';
+  promptLineEl.textContent='SUMMARY';
+  questionTextEl.innerHTML=`<div class="main">You finished Unit 13.<br><br><strong>Your score:</strong> ${score} / ${questions.length}.<br><br><strong>Great work.</strong></div>`;
+  optionsEl.innerHTML='';
+  feedbackEl.textContent='';
+  nextBtn.disabled=true;
+  speakBtn.onclick=null;
+}
+function restart(){index=0;score=0;allowNext=false;render()}nextBtn.addEventListener('click',next);restartBtn.addEventListener('click',restart);hintBtn.addEventListener('click',()=>{const q=currentQuestion();feedbackEl.className='feedback warn';feedbackEl.textContent=`Hint: ${q.hint}`});render();
 </script></body></html>
