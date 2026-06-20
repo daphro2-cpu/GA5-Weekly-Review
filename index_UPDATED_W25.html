@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GA5 Weekly Practice</title>
+
+  <style>
+    :root {
+      --yellow: #f4bf35;
+      --navy: #26385f;
+      --ink: #26304b;
+      --paper: #fff9ea;
+      --cream: #fff1ca;
+      --mint: #9ed3aa;
+      --sky: #a8d5de;
+      --coral: #e86f4d;
+      --leaf: #5ea56e;
+      --shadow: 0 14px 24px rgba(38, 48, 75, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Century Gothic", "Trebuchet MS", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255,255,255,.35) 0 5px, transparent 6px),
+        radial-gradient(circle at 88% 16%, rgba(255,255,255,.28) 0 5px, transparent 6px),
+        linear-gradient(180deg, #f5c747 0%, #f5c747 48%, #26385f 48%, #26385f 100%);
+      background-attachment: fixed;
+    }
+
+    .page-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 34px 20px 56px;
+    }
+
+    .hero {
+      position: relative;
+      background: var(--paper);
+      border: 5px solid var(--navy);
+      border-radius: 34px 24px 38px 26px;
+      padding: 28px 28px 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: -35px;
+      top: -45px;
+      width: 170px;
+      height: 170px;
+      background: var(--leaf);
+      border-radius: 52% 48% 54% 46%;
+      transform: rotate(18deg);
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 1;
+      color: var(--navy);
+      letter-spacing: .5px;
+    }
+
+    .hero p {
+      position: relative;
+      z-index: 1;
+      margin: 12px 0 0;
+      color: rgba(38,48,75,.74);
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .hero-art {
+      position: absolute;
+      right: 42px;
+      bottom: 24px;
+      width: 170px;
+      height: 95px;
+      z-index: 1;
+    }
+
+    .speech {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 92px;
+      height: 48px;
+      background: white;
+      border-radius: 45% 55% 45% 55%;
+      transform: rotate(-4deg);
+    }
+
+    .speech::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: -10px;
+      width: 18px;
+      height: 18px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 28% 100%);
+    }
+
+    .elephant {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 70px;
+      height: 54px;
+      background: #c8c8c0;
+      border-radius: 55% 45% 30% 30%;
+    }
+
+    .elephant::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 30px;
+      height: 36px;
+      background: #303030;
+      border-radius: 45% 45% 55% 45%;
+    }
+
+    .elephant::after {
+      content: "";
+      position: absolute;
+      right: -13px;
+      top: 21px;
+      width: 26px;
+      height: 12px;
+      border-bottom: 8px solid #c8c8c0;
+      border-radius: 0 0 18px 18px;
+      transform: rotate(18deg);
+    }
+
+    .bear {
+      position: absolute;
+      left: 84px;
+      bottom: 0;
+      width: 58px;
+      height: 68px;
+      background: var(--coral);
+      border-radius: 42% 42% 30% 30%;
+    }
+
+    .bear::before,
+    .bear::after {
+      content: "";
+      position: absolute;
+      top: -11px;
+      width: 16px;
+      height: 17px;
+      background: var(--coral);
+      border-radius: 50%;
+    }
+
+    .bear::before { left: 7px; }
+    .bear::after { right: 7px; }
+
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .week-card {
+      position: relative;
+      min-height: 220px;
+      border: 5px solid var(--navy);
+      border-radius: 30px 24px 34px 24px;
+      padding: 22px 18px 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .week-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 30px rgba(38, 48, 75, 0.24);
+    }
+
+    .week-card.sun { background: #ffdc70; }
+    .week-card.mint { background: #a9d6b0; }
+    .week-card.sky { background: #aad8e0; }
+    .week-card.coral { background: #efa076; }
+    .week-card.cream { background: #fff2c7; }
+    .week-card.leaf { background: #b7d98d; }
+
+    .week-card.locked {
+      filter: saturate(.85);
+    }
+
+    .week-pill {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      background: white;
+      border: 3px solid var(--navy);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-weight: 900;
+      color: var(--navy);
+      transform: rotate(-2deg);
+    }
+
+    .week-card h2 {
+      position: relative;
+      z-index: 2;
+      margin: 22px 0 6px;
+      font-size: 2rem;
+      color: var(--navy);
+    }
+
+    .week-card p {
+      position: relative;
+      z-index: 2;
+      margin: 0 auto 22px;
+      min-height: 42px;
+      max-width: 230px;
+      color: rgba(38,48,75,.72);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .start-btn {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      background: var(--navy);
+      padding: 12px 26px;
+      border-radius: 18px 14px 20px 14px;
+      font-weight: 900;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,.22);
+    }
+
+    .start-btn:hover {
+      transform: scale(1.04);
+    }
+
+    .start-btn.disabled {
+      background: #777 !important;
+      pointer-events: none;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+      background: var(--coral);
+      color: white;
+      border: 3px solid white;
+      border-radius: 999px;
+      padding: 8px 15px;
+      font-weight: 900;
+      box-shadow: 0 5px 12px rgba(0,0,0,.18);
+      transform: rotate(8deg);
+    }
+
+    .locked-badge {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: rgba(38,48,75,.74);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 900;
+      letter-spacing: .5px;
+      text-align: center;
+    }
+
+    .locked-badge::before {
+      content: "COMING SOON";
+      display: inline-block;
+      background: var(--coral);
+      border: 4px solid white;
+      border-radius: 18px;
+      padding: 14px 20px;
+      transform: rotate(-8deg);
+      box-shadow: 0 8px 18px rgba(0,0,0,.22);
+    }
+
+    .locked-badge {
+      font-size: 0;
+    }
+
+    .decor {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .decor::before {
+      content: "";
+      position: absolute;
+      right: 22px;
+      bottom: 26px;
+      width: 54px;
+      height: 22px;
+      border-radius: 100% 0 100% 0;
+      background: rgba(47,143,103,.50);
+      transform: rotate(-24deg);
+    }
+
+    .decor::after {
+      content: "";
+      position: absolute;
+      right: 62px;
+      bottom: 14px;
+      width: 46px;
+      height: 18px;
+      border-radius: 100% 0 100% 0;
+      background: rgba(62,131,167,.48);
+      transform: rotate(20deg);
+    }
+
+    .decor.book {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(38,56,95,.13) 0 24px, transparent 25px),
+        radial-gradient(circle at 12% 82%, rgba(255,255,255,.28) 0 13px, transparent 14px);
+    }
+
+    .decor.spark {
+      background:
+        radial-gradient(circle at 82% 20%, rgba(255,255,255,.28) 0 8px, transparent 9px),
+        radial-gradient(circle at 74% 28%, rgba(255,255,255,.22) 0 5px, transparent 6px);
+    }
+
+    .decor.pen {
+      background:
+        linear-gradient(135deg, transparent 70%, rgba(38,56,95,.10) 70% 72%, transparent 72%);
+    }
+
+    .decor.star {
+      background:
+        radial-gradient(circle at 18% 76%, rgba(38,56,95,.12) 0 18px, transparent 19px);
+    }
+
+    .decor.leafmark {
+      background:
+        radial-gradient(circle at 84% 20%, rgba(47,143,103,.18) 0 26px, transparent 27px);
+    }
+
+    .decor.dotmark {
+      background:
+        radial-gradient(circle at 14% 78%, rgba(38,56,95,.10) 0 9px, transparent 10px),
+        radial-gradient(circle at 20% 84%, rgba(38,56,95,.10) 0 6px, transparent 7px);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-art {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page-wrap {
+        padding: 22px 14px 40px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 24px 20px;
+      }
+
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrap">
+    <section class="hero">
+      <h1>GA5 Weekly Practice</h1>
+      <p>Choose your week and start your review. New worksheets will be added as they are ready.</p>
+      <div class="hero-art" aria-hidden="true">
+        <div class="speech"></div>
+        <div class="elephant"></div>
+        <div class="bear"></div>
+      </div>
+    </section>
+
+    <main class="grid">
+      
+      <article class="week-card sun">
+        
+        
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W01</div>
+        <h2>Week 1</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U1/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card mint">
+        
+        
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W02</div>
+        <h2>Week 2</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U2/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card sky">
+        
+        
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W03</div>
+        <h2>Week 3</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_Review-Practice/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card coral">
+        
+        
+        <div class="decor star" aria-hidden="true"></div>
+        <div class="week-pill">W04</div>
+        <h2>Week 4</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/ga5_u3/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card cream">
+        
+        
+        <div class="decor leafmark" aria-hidden="true"></div>
+        <div class="week-pill">W05</div>
+        <h2>Week 5</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/ga5_u4_rev/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card leaf">
+        
+        
+        <div class="decor dotmark" aria-hidden="true"></div>
+        <div class="week-pill">W06</div>
+        <h2>Week 6</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_Writing_2_Informational-Text/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card sun locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W07</div>
+        <h2>Week 7</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card mint">
+        
+        
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W08</div>
+        <h2>Week 8</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U5_REV/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card sky">
+        
+        
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W09</div>
+        <h2>Week 9</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U6/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card coral locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor star" aria-hidden="true"></div>
+        <div class="week-pill">W10</div>
+        <h2>Week 10</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card cream">
+        
+        
+        <div class="decor leafmark" aria-hidden="true"></div>
+        <div class="week-pill">W11</div>
+        <h2>Week 11</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U7/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card leaf">
+        
+        
+        <div class="decor dotmark" aria-hidden="true"></div>
+        <div class="week-pill">W12</div>
+        <h2>Week 12</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U8/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card sun locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W13</div>
+        <h2>Week 13</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card mint locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W14</div>
+        <h2>Week 14</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sky">
+        
+        
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W15</div>
+        <h2>Week 15</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_W15_Jakarta/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card coral">
+        
+        
+        <div class="decor star" aria-hidden="true"></div>
+        <div class="week-pill">W16</div>
+        <h2>Week 16</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_U10/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card cream">
+        
+        
+        <div class="decor leafmark" aria-hidden="true"></div>
+        <div class="week-pill">W17</div>
+        <h2>Week 17</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="https://daphro2-cpu.github.io/GA5_Descriptive-writing_City/" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card leaf locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor dotmark" aria-hidden="true"></div>
+        <div class="week-pill">W18</div>
+        <h2>Week 18</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sun locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W19</div>
+        <h2>Week 19</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card mint locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W20</div>
+        <h2>Week 20</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sky locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W21</div>
+        <h2>Week 21</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card coral">
+
+        <div class="decor star" aria-hidden="true"></div>
+        <div class="week-pill">W22</div>
+        <h2>Week 22</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="W22_Unit_13.html" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card cream">
+
+
+        <div class="decor leafmark" aria-hidden="true"></div>
+        <div class="week-pill">W23</div>
+        <h2>Week 23</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="W23_Unit_14.html" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card leaf locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor dotmark" aria-hidden="true"></div>
+        <div class="week-pill">W24</div>
+        <h2>Week 24</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sun">
+        <div class="new-badge">NEW</div>
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W25</div>
+        <h2>Week 25</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn" href="W25_Unit_15.html" target="_blank">Start</a>
+      </article>
+    
+      <article class="week-card mint locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W26</div>
+        <h2>Week 26</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sky locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W27</div>
+        <h2>Week 27</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card coral locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor star" aria-hidden="true"></div>
+        <div class="week-pill">W28</div>
+        <h2>Week 28</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card cream">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor leafmark" aria-hidden="true"></div>
+        <div class="week-pill">W29</div>
+        <h2>Week 29</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card leaf locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor dotmark" aria-hidden="true"></div>
+        <div class="week-pill">W30</div>
+        <h2>Week 30</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sun locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor book" aria-hidden="true"></div>
+        <div class="week-pill">W31</div>
+        <h2>Week 31</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card mint locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor spark" aria-hidden="true"></div>
+        <div class="week-pill">W32</div>
+        <h2>Week 32</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+      <article class="week-card sky locked">
+        
+        <div class="locked-badge">COMING SOON</div>
+        <div class="decor pen" aria-hidden="true"></div>
+        <div class="week-pill">W33</div>
+        <h2>Week 33</h2>
+        <p>Weekly Review Practice</p>
+        <a class="start-btn disabled" href="javascript:void(0)" target="_blank">Not Available</a>
+      </article>
+    
+    </main>
+  </div>
+</body>
+</html>
