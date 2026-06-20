@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GA5 Week 25 Listening</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#071428,#0b1c33);
+color:white;
+padding:25px;
+}
+
+.wrap{
+max-width:900px;
+margin:auto;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(255,255,255,0.06);
+padding:16px;
+border-radius:14px;
+}
+
+.card{
+margin-top:18px;
+background:rgba(255,255,255,0.06);
+padding:20px;
+border-radius:14px;
+}
+
+.qnum{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.btn{
+padding:10px 14px;
+background:#1c355a;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin:10px 0;
+}
+
+.options{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+
+.opt{
+padding:12px;
+background:#1c355a;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+
+.opt:hover{
+background:#274a7a;
+}
+
+#feedback{
+margin-top:10px;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h2>GA5 Vocabulary & Reading Skills - Week 25</h2>
+<div>Forces of Nature</div>
+</div>
+
+<div class="card">
+
+<div class="qnum" id="qnum">1.</div>
+
+<button class="btn" onclick="speak()">🔊 Listen</button>
+
+<div class="options" id="options"></div>
+
+<div id="feedback"></div>
+
+<button class="btn" onclick="next()">Next</button>
+
+</div>
+
+</div>
+
+<script>
+
+let i = 0;
+
+/* ================= DATA ================= */
+
+const data = [
+{
+audio:"Water covers land after heavy rain.",
+answer:"flood",
+options:["flood","earthquake","tornado","blizzard"]
+},
+{
+audio:"The ground suddenly shakes because of movement in the Earth.",
+answer:"earthquake",
+options:["earthquake","hurricane","sun","fog"]
+},
+{
+audio:"A huge ocean wave forms after movement under the sea.",
+answer:"tsunami",
+options:["tsunami","rain","wind","heat"]
+},
+{
+audio:"A very strong storm forms over warm ocean water.",
+answer:"hurricane",
+options:["hurricane","river","snow","dust"]
+},
+{
+audio:"A spinning column of air moves from sky to ground.",
+answer:"tornado",
+options:["tornado","fire","rock","tree"]
+},
+{
+audio:"A heavy snowstorm happens with strong wind.",
+answer:"blizzard",
+options:["blizzard","sun","rain","heat"]
+},
+{
+audio:"A storm with thunder and lightning happens in the sky.",
+answer:"thunderstorm",
+options:["thunderstorm","fog","cloud","wind"]
+},
+{
+audio:"People who go to dangerous places when accidents happen to help others.",
+answer:"rescue worker",
+options:["rescue worker","doctor","teacher","driver"]
+},
+{
+audio:"Electricity travels through tall structures across cities.",
+answer:"power lines",
+options:["power lines","roads","river","bridge"]
+},
+{
+audio:"A building suddenly falls down or breaks apart.",
+answer:"collapse",
+options:["collapse","grow","build","rise"]
+}
+];
+
+/* ================= SHUFFLE ================= */
+
+function shuffle(arr){
+return arr.sort(()=>Math.random()-0.5);
+}
+
+/* ================= LOAD ================= */
+
+function load(){
+
+document.getElementById("qnum").innerText = (i+1) + ".";
+
+document.getElementById("feedback").innerText = "";
+
+let box = document.getElementById("options");
+box.innerHTML = "";
+
+shuffle([...data[i].options]).forEach(opt=>{
+let d = document.createElement("div");
+d.className = "opt";
+d.innerText = opt;
+
+d.onclick = ()=>check(opt);
+
+box.appendChild(d);
+});
+}
+
+/* ================= AUDIO ================= */
+
+function speak(){
+
+window.speechSynthesis.cancel();
+
+setTimeout(()=>{
+
+const msg = new SpeechSynthesisUtterance(data[i].audio);
+
+let voices = window.speechSynthesis.getVoices();
+
+const usVoice =
+voices.find(v=>v.name.includes("Google US English")) ||
+voices.find(v=>v.lang==="en-US") ||
+voices[0];
+
+msg.voice = usVoice;
+msg.lang = "en-US";
+msg.rate = 0.82;
+
+window.speechSynthesis.speak(msg);
+
+},50);
+}
+
+/* ================= CHECK ================= */
+
+function check(ans){
+
+if(ans === data[i].answer){
+document.getElementById("feedback").style.color="#45f08d";
+document.getElementById("feedback").innerText="Correct ✔";
+} else {
+document.getElementById("feedback").style.color="#ff6b6b";
+document.getElementById("feedback").innerText =
+"Wrong ✘ Correct answer: " + data[i].answer;
+}
+}
+
+/* ================= NEXT ================= */
+
+function next(){
+i++;
+if(i >= data.length){
+document.getElementById("options").innerHTML="";
+document.getElementById("feedback").innerText="Finished!";
+return;
+}
+load();
+}
+
+/* INIT */
+load();
+
+</script>
+
+</body>
+</html>
