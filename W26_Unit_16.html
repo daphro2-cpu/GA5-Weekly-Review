@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GA5 Unit 16 Practice</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0b1c33;
+color:white;
+padding:20px;
+}
+
+.wrap{max-width:900px;margin:auto;}
+
+.header{
+display:flex;
+justify-content:space-between;
+background:rgba(255,255,255,0.06);
+padding:15px;
+border-radius:12px;
+}
+
+.card{
+margin-top:15px;
+background:rgba(255,255,255,0.06);
+padding:18px;
+border-radius:12px;
+}
+
+.q{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.btn{
+padding:10px;
+background:#1c355a;
+border:none;
+color:white;
+border-radius:10px;
+cursor:pointer;
+margin:10px 0;
+}
+
+.options{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.opt{
+padding:12px;
+background:#1c355a;
+border-radius:10px;
+cursor:pointer;
+text-align:center;
+font-weight:bold;
+}
+
+.opt:hover{background:#274a7a;}
+
+.feedback{margin-top:10px;}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="header">
+<h2>GA5 Unit 16 Vocabulary</h2>
+<div>Safety & Supplies</div>
+</div>
+
+<div class="card">
+
+<div class="q" id="qnum">1.</div>
+
+<button class="btn" onclick="speak()">🔊 Listen</button>
+
+<div class="options" id="opts"></div>
+
+<div class="feedback" id="fb"></div>
+
+<button class="btn" onclick="next()">Next</button>
+
+</div>
+
+</div>
+
+<script>
+
+let i=0;
+
+const data=[
+{audio:"A serious situation where people need immediate help.",answer:"emergency",options:["emergency","cash","battery","food"]},
+{audio:"A safe place where people go during storms.",answer:"storm shelter",options:["storm shelter","flashlight","supplies","cash"]},
+{audio:"A small medical box for injuries.",answer:"first-aid kit",options:["first-aid kit","storm shutters","sleeping bag","water"]},
+{audio:"Money used in emergencies.",answer:"cash",options:["cash","batteries","food","shelter"]},
+{audio:"Protects windows from strong wind.",answer:"storm shutters",options:["storm shutters","flashlight","water","food"]},
+{audio:"Used for sleeping when camping or evacuating.",answer:"sleeping bag",options:["sleeping bag","cash","kit","battery"]},
+{audio:"Helps you see in the dark.",answer:"flashlight",options:["flashlight","storm shelter","food","cash"]},
+{audio:"Needed to power devices.",answer:"batteries",options:["batteries","water","food","cash"]},
+{audio:"Things you need in an emergency like food and water.",answer:"supplies",options:["supplies","storm shutters","cash","sleeping bag"]},
+{audio:"Water sold in bottles for safety.",answer:"bottled water",options:["bottled water","cash","storm shelter","flashlight"]}
+];
+
+function speak(){
+window.speechSynthesis.cancel();
+setTimeout(()=>{
+let msg=new SpeechSynthesisUtterance(data[i].audio);
+let v=window.speechSynthesis.getVoices().find(v=>v.lang==="en-US");
+msg.voice=v;
+msg.lang="en-US";
+msg.rate=0.85;
+window.speechSynthesis.speak(msg);
+},50);
+}
+
+function load(){
+document.getElementById("qnum").innerText=(i+1)+".";
+document.getElementById("fb").innerText="";
+let box=document.getElementById("opts");
+box.innerHTML="";
+
+data[i].options.sort(()=>Math.random()-0.5).forEach(o=>{
+let d=document.createElement("div");
+d.className="opt";
+d.innerText=o;
+d.onclick=()=>check(o);
+box.appendChild(d);
+});
+}
+
+function check(a){
+if(a===data[i].answer){
+document.getElementById("fb").innerHTML="✔ Correct";
+}else{
+document.getElementById("fb").innerHTML="✘ Wrong. Answer: "+data[i].answer;
+}
+}
+
+function next(){
+i++;
+if(i>=data.length){
+document.getElementById("opts").innerHTML="";
+document.getElementById("fb").innerHTML="Finished!";
+return;
+}
+load();
+}
+
+load();
+</script>
+
+</body>
+</html>
